@@ -1,0 +1,45 @@
+Full Console Log from Lumyst Extension Testing
+Date: October 14-15, 2025
+Browser: VS Code Developer Tools Console
+
+=== KEY FINDINGS ===
+
+1. SECURITY ISSUE: Iframe Sandbox Escape
+2. VIOLATION: document.write() usage
+3. PERFORMANCE: Non-passive event listeners on scroll-blocking events
+4. ERROR: Missing .gitignore file causing export failure
+5. Multiple duplicate progress messages being sent
+
+=== FULL LOG ===
+
+[Line 1] An iframe which has both allow-scripts and allow-same-origin for its sandbox attribute can escape its sandboxing.
+
+[Line 2] [Violation] Avoid using document.write(). <URL>
+
+[Line 3] event.ts:42 [Violation] Added non-passive event listener to a scroll-blocking 'touchstart' event. Consider marking event handler as 'passive' to make the page more responsive. See https://www.chromestatus.com/feature/5745543795965952
+
+[Extension Host Logs]
+- Analysis state changes tracked
+- LSP requirements checks passed
+- Multiple warnings about unsupported file types (directories being treated as files)
+- Export analysis failure due to missing .gitignore file
+- Duplicate progress messages being sent to webview
+
+[Server Logs]
+- File type not supported warnings for directory paths
+- Parser errors for directory paths
+- Analysis completed successfully despite warnings
+- Export failure: ENOENT: no such file or directory, open 'd:\Code\Lumyst SWE intership task\.gitignore'
+
+[Webview Logs]
+- Graph data updates
+- Status updates
+- No errors in webview communication
+
+=== PATTERNS IDENTIFIED ===
+
+1. Duplicate Messages: Progress messages sent 2-3 times for same checkpoint
+2. Directory Path Errors: Directories treated as files to parse
+3. Export Functionality: Hardcoded .gitignore dependency
+4. Security: Iframe sandbox configuration issue
+5. Performance: Touch event handlers not optimized
